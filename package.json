@@ -14,5 +14,8 @@
     "SOURCE"
   ],
   "author": "Juan M. Rada Leon",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^5.7.2"
+  }
 }
