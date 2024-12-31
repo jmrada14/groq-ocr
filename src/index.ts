@@ -16,7 +16,7 @@ export enum GroqVisionModel {
  * Performs Optical Character Recognition (OCR) on an image file using Groq's API.
  *
  * @param options - The OCR options
- * @param options.filePath - The path to the image file to perform OCR on
+ * @param options.filePath - The path to the image file to perform OCR on. Accepts local file paths or remote URLs. Allowed extensions: .jpg, .jpeg, .png, .pdf
  * @param options.apiKey - Optional Groq API key. Defaults to GROQ_API_KEY environment variable
  * @param options.model - Optional Groq vision model to use. Defaults to LLAMA_32_11B
  * @returns Promise<string> A promise that resolves to the extracted text in markdown format
