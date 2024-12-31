@@ -17,6 +17,7 @@
   "author": "Juan M. Rada Leon",
   "license": "MIT",
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/node": "^22.10.2",
     "dotenv": "^16.4.7",
     "tsx": "^4.19.2",
