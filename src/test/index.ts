@@ -4,7 +4,7 @@ import { GroqVisionModel, ocr } from "..";
 async function main() {
   let markdown = await ocr({
     filePath: "./image.jpg",
-    apiKey: "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",
+    apiKey: process.env.GROQ_API_KEY,
     model: GroqVisionModel.LLAMA_32_90B,
   });
   // write the markdown to a file
