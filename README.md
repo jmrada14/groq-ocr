@@ -2,7 +2,7 @@
   <div>
     <h1 align="center">Groq OCR 🔬</h1>
   </div>
-	<p>An npm library and CLI to run OCR with Groq provided models.</p>
+  <p>An npm library and CLI to run OCR with Groq provided models.</p>
 <a href="https://groq.com" target="_blank" rel="noopener noreferrer">
   <img
     src="https://groq.com/wp-content/uploads/2024/03/PBG-mark1-color.svg"
@@ -12,6 +12,20 @@
   />
 </a>
 </div>
+
+## Table of Contents
+- [Disclaimer](#disclaimer)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Use as NPM package](#use-as-npm-package)
+  - [ocr options](#ocr-options)
+  - [Use as CLI](#use-as-cli)
+  - [CLI Examples](#cli-examples)
+  - [CLI Options](#cli-options)
+- [How it works](#how-it-works)
+- [Models](#models)
+- [Roadmap](#roadmap)
+- [Credit](#credit)
 
 ---
 
@@ -120,6 +134,7 @@ enum GroqVisionModel {
 - [x] Add support for remote images OCR
 - [x] Add support for single page PDFs
 - [x] Add support for JSON output in addition to markdown
+- [x] Add CLI 
 - [ ] Add support for multi-page PDFs OCR (COMING SOON)
 - [ ] extend prompt with custom instructions
 
