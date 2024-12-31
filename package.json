@@ -7,13 +7,20 @@
 		"build": "tsc",
 		"test": "tsx ./test/index.ts"
 	},
-	"keywords": ["AI", "LLMs", "GROQ", "OPEN", "SOURCE"],
+	"keywords": [
+		"AI",
+		"LLMs",
+		"GROQ",
+		"OPEN",
+		"SOURCE"
+	],
 	"author": "Juan M. Rada Leon",
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/node": "^22.10.2",
 		"dotenv": "^16.4.7",
+		"lefthook": "^1.10.1",
 		"tsx": "^4.19.2",
 		"typescript": "^5.7.2"
 	},
