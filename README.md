@@ -3,7 +3,14 @@
     <h1 align="center">Groq OCR 🔬</h1>
   </div>
 	<p>An npm library to run OCR with Groq provided models.</p>
-
+<a href="https://groq.com" target="_blank" rel="noopener noreferrer">
+  <img
+    src="https://groq.com/wp-content/uploads/2024/03/PBG-mark1-color.svg"
+    alt="Powered by Groq for fast inference."
+    width="200"
+    height="200"
+  />
+</a>
 </div>
 
 ---
@@ -28,6 +35,7 @@ const result = await ocr({
   filePath: "./filepath.jpg", // Allowed formats: jpg, jpeg, png, pdf.
   apiKey: process.env.GROQ_API_KEY, // Get your API key from https://console.groq.com/
   model: GroqVisionModel.LLAMA_32_90B, // available models: LLAMA_32_11B, LLAMA_32_90B. Default: LLAMA_32_11B
+  jsonMode: false, // Default: false. Set to true to get JSON output.
 });
 ```
 
@@ -57,7 +65,9 @@ enum GroqVisionModel {
 - [x] Add support for remote images OCR
 - [x] Add support for single page PDFs
 - [x] Add support for JSON output in addition to markdown
-- [ ] Add support for multi-page PDFs OCR
+- [ ] Add support for multi-page PDFs OCR (COMING SOON)
+- [ ] extend prompt with custom instructions
+ 
 
 ## Credit
 

@@ -26,17 +26,22 @@ export async function ocr({
   filePath,
   apiKey = process.env.GROQ_API_KEY,
   model = GroqVisionModel.LLAMA_32_11B,
+  jsonMode = false,
 }: {
   filePath: string;
   apiKey?: string;
   model?: GroqVisionModel;
+  jsonMode?: boolean;
 }) {
   const client = new Groq({ apiKey });
-  return await getMarkdown({ groq: client, model, filePath });
+  const result = jsonMode
+    ? await getJson({ groq: client, model, filePath })
+    : await getMarkdown({ groq: client, model, filePath });
+  return result;
 }
 
 /**
- * Converts an image into precise Markdown format, maintaining the original document's visual hierarchy and structure.
+ * Converts an image or PDF into Markdown format
  *
  * @param options - The options object
  * @param options.groq - The Groq client instance
@@ -93,6 +98,80 @@ async function getMarkdown({
       },
     ],
     model: model,
+    stream: false,
+    stop: null,
+  });
+  return completion.choices[0].message.content;
+}
+
+/**
+ * Converts an image or PDF into JSON format
+ *
+ * @param options - The options object
+ * @param options.groq - The Groq client instance
+ * @param options.model - The GroqVision model to use for image processing
+ * @param options.filePath - Path to the image file (can be local path or remote URL)
+ *
+ * @returns Promise<string> A promise that resolves to the JSON representation of the image
+ **/
+async function getJson({
+  groq,
+  model,
+  filePath,
+}: {
+  groq: Groq;
+  model: GroqVisionModel;
+  filePath: string;
+}) {
+  const systemPrompt = `Convert the provided image into JSON format.
+Ensure that all content from the page is captured in an appropriate JSON structure, including headers, footers, subtexts, images (with alt text if possible), tables, and any other elements.
+Preserve both the hierarchical relationships and semantic meaning of the original document.
+
+  Requirements:
+  - Output Only Valid JSON: Return solely the JSON content without any additional explanations or comments.
+  - No Delimiters: Do not use code fences or delimiters like \`\`\`json.
+  - Complete Schema: Create appropriate JSON objects and arrays to represent all document elements
+  - Complete Content: Do not omit any part of the page, including headers, footers, and subtext.
+  - Structural Fidelity: 
+   Maintain parent-child relationships between elements
+   Preserve the sequential order of content
+   Represent visual hierarchy through nested objects
+  - Keep the text in the same order as the original document.
+  - Keep the text as close to the original formatting as possible.
+  - Do NOT include any text that is not visible on the image.
+  - Compare output structure to original document layout
+  - Represent tables as arrays of objects with consistent column names
+  - Verify all content is included without omissions
+  - Ensure semantic meaning is preserved
+  - Confirm heading hierarchy matches visual importance
+  - Validate table data structure maintains column relationships
+  - Validate JSON syntax and structure
+  - Ensure semantic relationships are preserved in the JSON schema
+  - Confirm nested levels match visual importance in the source
+  `;
+
+  const imageUrl = await getImageUrl(filePath);
+
+  const completion = await groq.chat.completions.create({
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: systemPrompt,
+          },
+          {
+            type: "image_url",
+            image_url: {
+              url: imageUrl,
+            },
+          },
+        ],
+      },
+    ],
+    model: model,
+    response_format: { type: "json_object" },
     stream: false,
     stop: null,
   });
