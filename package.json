@@ -18,10 +18,12 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "groq-sdk": "^0.9.1"
+    "groq-sdk": "^0.9.1",
+    "pdftopic": "^1.0.7-alpha"
   }
 }

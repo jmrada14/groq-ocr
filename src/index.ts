@@ -1,5 +1,6 @@
 import fs from "fs";
 import Groq from "groq-sdk";
+import { pdftobuffer } from "pdftopic";
 
 /**
  * Enumeration representing available Groq Vision model options.
@@ -56,8 +57,8 @@ async function getMarkdown({
   const systemPrompt = `Convert the provided image into Markdown format. 
   Ensure that all content from the page is included, such as headers, footers, subtexts, images (with alt text if possible), tables, and any other elements.
   Preserve the exact visual hierarchy and semantic structure of the original document.
-  Requirements:
 
+  Requirements:
   - Output Only Markdown: Return solely the Markdown content without any additional explanations or comments.
   - No Delimiters: Do not use code fences or delimiters like \`\`\`markdown.
   - Complete Content: Do not omit any part of the page, including headers, footers, and subtext.
@@ -70,9 +71,20 @@ async function getMarkdown({
   - Confirm heading hierarchy matches visual importance
   - Validate table column alignment matches source
   `;
-  const imageUrl = isRemoteFile(filePath)
-    ? filePath
-    : `data:image/jpeg;base64,${encodeImage(filePath)}`;
+
+  let imageUrl: string;
+
+  if (isRemoteFile(filePath)) {
+    imageUrl = filePath;
+  } else {
+    if (isPdf(filePath)) {
+      const base64Data = await pdfToBase64(filePath);
+      imageUrl = `data:image/jpeg;base64,${base64Data}`;
+    } else {
+      imageUrl = `data:image/jpeg;base64,${encodeImage(filePath)}`;
+    }
+  }
+
   const completion = await groq.chat.completions.create({
     messages: [
       {
@@ -129,4 +141,33 @@ function isRemoteFile(filePath: string): boolean {
     throw new Error("File path must be a string");
   }
   return filePath.startsWith("http://") || filePath.startsWith("https://");
+}
+
+/**
+ * Checks if a file path ends with the .pdf extension
+ * @param filePath - The path of the file to check
+ * @returns True if the file path ends with .pdf, false otherwise
+ */
+function isPdf(filePath: string): boolean {
+  return filePath.endsWith(".pdf");
+}
+
+/**
+ * Converts a PDF file to a base64-encoded image string.
+ * @param pdfPath - The file system path to the PDF file.
+ * @returns A Promise that resolves to a base64-encoded string representing the first page of the PDF as an image.
+ * @throws {Error} If the PDF file is not found at the specified path.
+ * @throws {Error} If the image encoding process fails.
+ */
+async function pdfToBase64(pdfPath: string) {
+  try {
+    if (!fs.existsSync(pdfPath)) {
+      throw new Error(`Pdf file not found: ${pdfPath}`);
+    }
+    const pdfFile = fs.readFileSync(pdfPath);
+    const bufferPdf = await pdftobuffer(pdfFile, 0);
+    return Buffer.from(bufferPdf[0]).toString("base64");
+  } catch (error) {
+    throw new Error(`Failed to encode image: ${(error as Error).message}`);
+  }
 }
