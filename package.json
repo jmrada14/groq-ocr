@@ -4,6 +4,7 @@
   "description": "a library to run OCR with Groq provided models.",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "tsx ./test/index.ts"
   },
   "keywords": [
