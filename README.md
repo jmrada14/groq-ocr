@@ -67,8 +67,9 @@ enum GroqVisionModel {
 - [x] Add support for JSON output in addition to markdown
 - [ ] Add support for multi-page PDFs OCR (COMING SOON)
 - [ ] extend prompt with custom instructions
- 
 
 ## Credit
 
 This project was highly inspired by [llama-ocr](https://github.com/Nutlope/llama-ocr/tree/main).
+
+[![Formatted with Biome](https://img.shields.io/badge/Formatted_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev/)
