@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { GroqVisionModel, ocr } from "../src";
 import { config } from "dotenv";
+import { GroqVisionModel, ocr } from "../src";
 config();
 
 async function main() {

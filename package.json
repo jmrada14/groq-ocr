@@ -2,18 +2,12 @@
 	"name": "groq-ocr",
 	"version": "1.0.1",
 	"description": "a library to run OCR with Groq provided models.",
-	"main": "dist/index.js",
+	"main": "dist/src/index.js",
 	"scripts": {
 		"build": "tsc",
 		"test": "tsx ./test/index.ts"
 	},
-	"keywords": [
-		"AI",
-		"LLMs",
-		"GROQ",
-		"OPEN",
-		"SOURCE"
-	],
+	"keywords": ["AI", "LLMs", "GROQ", "OPEN", "SOURCE"],
 	"author": "Juan M. Rada Leon",
 	"license": "MIT",
 	"devDependencies": {
@@ -24,7 +18,11 @@
 		"tsx": "^4.19.2",
 		"typescript": "^5.7.2"
 	},
+	"bin": {
+		"groq-ocr": "./dist/src/lib.js"
+	},
 	"dependencies": {
+		"commander": "^13.0.0",
 		"groq-sdk": "^0.9.1",
 		"pdftopic": "^1.0.7-alpha"
 	}
