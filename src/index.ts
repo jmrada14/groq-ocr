@@ -1,6 +1,12 @@
 import fs from "fs";
 import Groq from "groq-sdk";
 
+/**
+ * Enumeration representing available Groq Vision model options.
+ * @enum {string}
+ * @readonly
+ * @description Models that can be used for vision and language processing with Groq API
+ */
 export enum GroqVisionModel {
   LLAMA_32_11B = "llama-3.2-11b-vision-preview",
   LLAMA_32_90B = "llama-3.2-90b-vision-preview",
@@ -92,11 +98,35 @@ async function getMarkdown({
   return completion.choices[0].message.content;
 }
 
+/**
+ * Reads an image file from the specified path and converts it to a base64 encoded string.
+ *
+ * @param imagePath - The file system path to the image file
+ * @returns A base64 encoded string representation of the image
+ * @throws {Error} If the file cannot be read or does not exist
+ */
 function encodeImage(imagePath: string) {
-  const imageFile = fs.readFileSync(imagePath);
-  return Buffer.from(imageFile).toString("base64");
+  try {
+    if (!fs.existsSync(imagePath)) {
+      throw new Error(`Image file not found: ${imagePath}`);
+    }
+    const imageFile = fs.readFileSync(imagePath);
+    return Buffer.from(imageFile).toString("base64");
+  } catch (error) {
+    throw new Error(`Failed to encode image: ${(error as Error).message}`);
+  }
 }
 
+/**
+ * Determines if a file path is a remote URL.
+ *
+ * @param filePath - The file path to check
+ * @returns boolean True if the path is a remote URL (starts with http:// or https://), false otherwise
+ * @throws {Error} If filePath is not a string
+ */
 function isRemoteFile(filePath: string): boolean {
+  if (typeof filePath !== "string") {
+    throw new Error("File path must be a string");
+  }
   return filePath.startsWith("http://") || filePath.startsWith("https://");
 }
