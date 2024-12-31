@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import Groq from "groq-sdk";
 import { pdftobuffer } from "pdftopic";
 
@@ -9,8 +9,8 @@ import { pdftobuffer } from "pdftopic";
  * @description Models that can be used for vision and language processing with Groq API
  */
 export enum GroqVisionModel {
-  LLAMA_32_11B = "llama-3.2-11b-vision-preview",
-  LLAMA_32_90B = "llama-3.2-90b-vision-preview",
+	LLAMA_32_11B = "llama-3.2-11b-vision-preview",
+	LLAMA_32_90B = "llama-3.2-90b-vision-preview",
 }
 
 /**
@@ -23,21 +23,21 @@ export enum GroqVisionModel {
  * @returns Promise<string> A promise that resolves to the extracted text in markdown format
  */
 export async function ocr({
-  filePath,
-  apiKey = process.env.GROQ_API_KEY,
-  model = GroqVisionModel.LLAMA_32_11B,
-  jsonMode = false,
+	filePath,
+	apiKey = process.env.GROQ_API_KEY,
+	model = GroqVisionModel.LLAMA_32_11B,
+	jsonMode = false,
 }: {
-  filePath: string;
-  apiKey?: string;
-  model?: GroqVisionModel;
-  jsonMode?: boolean;
+	filePath: string;
+	apiKey?: string;
+	model?: GroqVisionModel;
+	jsonMode?: boolean;
 }) {
-  const client = new Groq({ apiKey });
-  const result = jsonMode
-    ? await getJson({ groq: client, model, filePath })
-    : await getMarkdown({ groq: client, model, filePath });
-  return result;
+	const client = new Groq({ apiKey });
+	const result = jsonMode
+		? await getJson({ groq: client, model, filePath })
+		: await getMarkdown({ groq: client, model, filePath });
+	return result;
 }
 
 /**
@@ -51,15 +51,15 @@ export async function ocr({
  * @returns Promise<string> A promise that resolves to the Markdown representation of the image
  **/
 async function getMarkdown({
-  groq,
-  model,
-  filePath,
+	groq,
+	model,
+	filePath,
 }: {
-  groq: Groq;
-  model: GroqVisionModel;
-  filePath: string;
+	groq: Groq;
+	model: GroqVisionModel;
+	filePath: string;
 }) {
-  const systemPrompt = `Convert the provided image into Markdown format. 
+	const systemPrompt = `Convert the provided image into Markdown format. 
   Ensure that all content from the page is included, such as headers, footers, subtexts, images (with alt text if possible), tables, and any other elements.
   Preserve the exact visual hierarchy and semantic structure of the original document.
 
@@ -77,31 +77,31 @@ async function getMarkdown({
   - Validate table column alignment matches source
   `;
 
-  const imageUrl = await getImageUrl(filePath);
+	const imageUrl = await getImageUrl(filePath);
 
-  const completion = await groq.chat.completions.create({
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: systemPrompt,
-          },
-          {
-            type: "image_url",
-            image_url: {
-              url: imageUrl,
-            },
-          },
-        ],
-      },
-    ],
-    model: model,
-    stream: false,
-    stop: null,
-  });
-  return completion.choices[0].message.content;
+	const completion = await groq.chat.completions.create({
+		messages: [
+			{
+				role: "user",
+				content: [
+					{
+						type: "text",
+						text: systemPrompt,
+					},
+					{
+						type: "image_url",
+						image_url: {
+							url: imageUrl,
+						},
+					},
+				],
+			},
+		],
+		model: model,
+		stream: false,
+		stop: null,
+	});
+	return completion.choices[0].message.content;
 }
 
 /**
@@ -115,15 +115,15 @@ async function getMarkdown({
  * @returns Promise<string> A promise that resolves to the JSON representation of the image
  **/
 async function getJson({
-  groq,
-  model,
-  filePath,
+	groq,
+	model,
+	filePath,
 }: {
-  groq: Groq;
-  model: GroqVisionModel;
-  filePath: string;
+	groq: Groq;
+	model: GroqVisionModel;
+	filePath: string;
 }) {
-  const systemPrompt = `Convert the provided image into JSON format.
+	const systemPrompt = `Convert the provided image into JSON format.
 Ensure that all content from the page is captured in an appropriate JSON structure, including headers, footers, subtexts, images (with alt text if possible), tables, and any other elements.
 Preserve both the hierarchical relationships and semantic meaning of the original document.
 
@@ -150,32 +150,32 @@ Preserve both the hierarchical relationships and semantic meaning of the origina
   - Confirm nested levels match visual importance in the source
   `;
 
-  const imageUrl = await getImageUrl(filePath);
+	const imageUrl = await getImageUrl(filePath);
 
-  const completion = await groq.chat.completions.create({
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: systemPrompt,
-          },
-          {
-            type: "image_url",
-            image_url: {
-              url: imageUrl,
-            },
-          },
-        ],
-      },
-    ],
-    model: model,
-    response_format: { type: "json_object" },
-    stream: false,
-    stop: null,
-  });
-  return completion.choices[0].message.content;
+	const completion = await groq.chat.completions.create({
+		messages: [
+			{
+				role: "user",
+				content: [
+					{
+						type: "text",
+						text: systemPrompt,
+					},
+					{
+						type: "image_url",
+						image_url: {
+							url: imageUrl,
+						},
+					},
+				],
+			},
+		],
+		model: model,
+		response_format: { type: "json_object" },
+		stream: false,
+		stop: null,
+	});
+	return completion.choices[0].message.content;
 }
 
 /**
@@ -188,16 +188,16 @@ Preserve both the hierarchical relationships and semantic meaning of the origina
  * @throws {Error} If the file cannot be read or converted
  */
 async function getImageUrl(filePath: string): Promise<string> {
-  if (isRemoteFile(filePath)) {
-    return filePath;
-  }
+	if (isRemoteFile(filePath)) {
+		return filePath;
+	}
 
-  if (isPdf(filePath)) {
-    const base64Data = await pdfToBase64(filePath);
-    return `data:image/jpeg;base64,${base64Data}`;
-  }
+	if (isPdf(filePath)) {
+		const base64Data = await pdfToBase64(filePath);
+		return `data:image/jpeg;base64,${base64Data}`;
+	}
 
-  return `data:image/jpeg;base64,${encodeImage(filePath)}`;
+	return `data:image/jpeg;base64,${encodeImage(filePath)}`;
 }
 
 /**
@@ -208,15 +208,15 @@ async function getImageUrl(filePath: string): Promise<string> {
  * @throws {Error} If the file cannot be read or does not exist
  */
 function encodeImage(imagePath: string) {
-  try {
-    if (!fs.existsSync(imagePath)) {
-      throw new Error(`Image file not found: ${imagePath}`);
-    }
-    const imageFile = fs.readFileSync(imagePath);
-    return Buffer.from(imageFile).toString("base64");
-  } catch (error) {
-    throw new Error(`Failed to encode image: ${(error as Error).message}`);
-  }
+	try {
+		if (!fs.existsSync(imagePath)) {
+			throw new Error(`Image file not found: ${imagePath}`);
+		}
+		const imageFile = fs.readFileSync(imagePath);
+		return Buffer.from(imageFile).toString("base64");
+	} catch (error) {
+		throw new Error(`Failed to encode image: ${(error as Error).message}`);
+	}
 }
 
 /**
@@ -227,10 +227,10 @@ function encodeImage(imagePath: string) {
  * @throws {Error} If filePath is not a string
  */
 function isRemoteFile(filePath: string): boolean {
-  if (typeof filePath !== "string") {
-    throw new Error("File path must be a string");
-  }
-  return filePath.startsWith("http://") || filePath.startsWith("https://");
+	if (typeof filePath !== "string") {
+		throw new Error("File path must be a string");
+	}
+	return filePath.startsWith("http://") || filePath.startsWith("https://");
 }
 
 /**
@@ -240,10 +240,10 @@ function isRemoteFile(filePath: string): boolean {
  * @throws {Error} If filePath is not a string
  */
 function isPdf(filePath: string): boolean {
-  if (typeof filePath !== "string") {
-    throw new Error("File path must be a string");
-  }
-  return filePath.endsWith(".pdf");
+	if (typeof filePath !== "string") {
+		throw new Error("File path must be a string");
+	}
+	return filePath.endsWith(".pdf");
 }
 
 /**
@@ -254,14 +254,14 @@ function isPdf(filePath: string): boolean {
  * @throws {Error} If the image encoding process fails.
  */
 async function pdfToBase64(pdfPath: string) {
-  try {
-    if (!fs.existsSync(pdfPath)) {
-      throw new Error(`Pdf file not found: ${pdfPath}`);
-    }
-    const pdfFile = fs.readFileSync(pdfPath);
-    const bufferPdf = await pdftobuffer(pdfFile, 0);
-    return Buffer.from(bufferPdf[0]).toString("base64");
-  } catch (error) {
-    throw new Error(`Failed to encode image: ${(error as Error).message}`);
-  }
+	try {
+		if (!fs.existsSync(pdfPath)) {
+			throw new Error(`Pdf file not found: ${pdfPath}`);
+		}
+		const pdfFile = fs.readFileSync(pdfPath);
+		const bufferPdf = await pdftobuffer(pdfFile, 0);
+		return Buffer.from(bufferPdf[0]).toString("base64");
+	} catch (error) {
+		throw new Error(`Failed to encode image: ${(error as Error).message}`);
+	}
 }
