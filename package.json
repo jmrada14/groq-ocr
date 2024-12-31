@@ -1,6 +1,6 @@
 {
   "name": "groq-ocr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a library to run OCR with Groq provided models.",
   "main": "dist/index.js",
   "scripts": {
