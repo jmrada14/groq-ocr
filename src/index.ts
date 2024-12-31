@@ -72,18 +72,7 @@ async function getMarkdown({
   - Validate table column alignment matches source
   `;
 
-  let imageUrl: string;
-
-  if (isRemoteFile(filePath)) {
-    imageUrl = filePath;
-  } else {
-    if (isPdf(filePath)) {
-      const base64Data = await pdfToBase64(filePath);
-      imageUrl = `data:image/jpeg;base64,${base64Data}`;
-    } else {
-      imageUrl = `data:image/jpeg;base64,${encodeImage(filePath)}`;
-    }
-  }
+  const imageUrl = await getImageUrl(filePath);
 
   const completion = await groq.chat.completions.create({
     messages: [
@@ -108,6 +97,28 @@ async function getMarkdown({
     stop: null,
   });
   return completion.choices[0].message.content;
+}
+
+/**
+ * Converts a file path into a URL representation of the image.
+ *
+ * @param filePath - The path to the image file or a remote URL
+ * @returns A Promise that resolves to either:
+ *          - The original URL if the file is remote
+ *          - A base64 data URL if the file is local (PDF or image)
+ * @throws {Error} If the file cannot be read or converted
+ */
+async function getImageUrl(filePath: string): Promise<string> {
+  if (isRemoteFile(filePath)) {
+    return filePath;
+  }
+
+  if (isPdf(filePath)) {
+    const base64Data = await pdfToBase64(filePath);
+    return `data:image/jpeg;base64,${base64Data}`;
+  }
+
+  return `data:image/jpeg;base64,${encodeImage(filePath)}`;
 }
 
 /**
@@ -147,8 +158,12 @@ function isRemoteFile(filePath: string): boolean {
  * Checks if a file path ends with the .pdf extension
  * @param filePath - The path of the file to check
  * @returns True if the file path ends with .pdf, false otherwise
+ * @throws {Error} If filePath is not a string
  */
 function isPdf(filePath: string): boolean {
+  if (typeof filePath !== "string") {
+    throw new Error("File path must be a string");
+  }
   return filePath.endsWith(".pdf");
 }
 
