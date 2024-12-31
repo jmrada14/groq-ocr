@@ -3,3 +3,4 @@ pre-commit:
     check:
       glob: "*.{js,ts,json}"
       run: npx @biomejs/biome check --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      stage_fixed: true
