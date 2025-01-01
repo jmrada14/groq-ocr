@@ -1,0 +1,36 @@
+{
+	"header": {
+		"title": "Invoice",
+		"headerTitle": "YeeLogic Pty. Ltd.",
+		"headerAddress1": "7 / 39 Bouverie St",
+		"headerAddress2": "Carlton, VIC 3053",
+		"headerCountry": "Australia",
+		"headerPostcode": "ABN 25 101 193 560",
+		"headerWebsite": "www.yeelogic.com",
+		"footer": "www.yeelogic.com"
+	},
+	"invoice": {
+		"invoiceNumber": "001246",
+		"customerName": "",
+		"streetName": "",
+		"postcode": "",
+		"country": "",
+		"date": "Nov 26, 2016",
+		"description": "001246",
+		"paymentDue": "30 days after invoice date",
+		"table": [
+			{
+				"from": "Nov 26, 2016",
+				"until": "Nov 26, 2017",
+				"amount": "USD $850.00"
+			}
+		],
+		"total": "USD $850.00"
+	},
+	"_links": {
+		"self": {
+			"type": "application/json",
+			"href": "/api/v1/invoices/001246"
+		}
+	}
+}

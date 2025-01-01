@@ -1,0 +1,58 @@
+{
+	"Trader Joe's": [
+		{
+			"transaction_number": "083 - 925 521-1134",
+			"store_address": "785 Oak Grove Road, Concord, CA 94518",
+			"sale_transaction": [
+				{
+					"product": "Sour Cream & Onion Corn",
+					"price": "$2.49"
+				},
+				{
+					"product": "Sliced Whole Wheat Bread",
+					"price": "$2.49"
+				},
+				{
+					"product": "Korean Rice Cakes Tteok",
+					"price": "$3.99"
+				},
+				{
+					"product": "Green Zucchini 1.5 lb",
+					"price": "$2.49"
+				},
+				{
+					"product": "Kale 10 Oz",
+					"price": "$1.99"
+				},
+				{
+					"product": "Spaghetti Each",
+					"price": "$2.49"
+				},
+				{
+					"product": "Less Salt Roasted SA Banana Each",
+					"price": "$1.14"
+				},
+				{
+					"product": "Pasta Gnucchi Pranzo",
+					"price": "$1.99"
+				},
+				{
+					"product": "ORG Coconut Milk",
+					"price": "$5.99"
+				},
+				{
+					"product": "ORG Yellow Mustard",
+					"price": "$1.79"
+				},
+				{
+					"product": "HOL Traditional Active D",
+					"price": "$1.29"
+				}
+			],
+			"transaction_items": 17,
+			"balance_to_pay": "$26.93",
+			"gift_card_rendered": "$25.00",
+			"visa_debit": "$1.83"
+		}
+	]
+}

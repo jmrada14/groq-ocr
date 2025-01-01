@@ -37,6 +37,8 @@ _PDF support is limited to single-page local PDFs._
 
 _PDF support relies on [pdftopic](https://github.com/Ilyes-El-Majouti/pdftopic) library which requires node>=12 and imagemagick._
 
+_JSON mode might fail with `json_validate_failed` error_
+
 ## Installation
 
 `npm i groq-ocr` to use as an NPM package.

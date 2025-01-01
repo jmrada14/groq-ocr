@@ -1,0 +1,57 @@
+{
+	"pageHeader": {
+		"hotelName": "Berghotel Grosse Scheidegg",
+		"address": "3818 Grindelwald",
+		"familyName": "Familie R.Müller"
+	},
+	"invoiceDetails": {
+		"date": "30.07.2007",
+		"time": "13:29,17",
+		"tableNumber": "7/01"
+	},
+	"items": [
+		{
+			"item": "2xLatte Macchiato",
+			"quantity": "a",
+			"unitPrice": "4.50",
+			"total": "9.00"
+		},
+		{
+			"item": "1xGloki",
+			"quantity": "a",
+			"unitPrice": "5.00",
+			"total": "5.00"
+		},
+		{
+			"item": "1xSchweinschnitzel",
+			"quantity": "a",
+			"unitPrice": "22.00",
+			"total": "22.00"
+		},
+		{
+			"item": "1xChässeppätzli",
+			"quantity": "18.50",
+			"unitPrice": "18.50",
+			"total": "18.50"
+		}
+	],
+	"total": {
+		"totalAmount": "54.50",
+		"taxIncluded": "7.6%",
+		"taxAmount": "3.85",
+		"grandTotal": "54.50"
+	},
+	"paymentDetails": {
+		"amountPaid": "36.33",
+		"changeGiven": "3.85"
+	},
+	"serverInfo": {
+		"serverName": "Ursula",
+		"tableNumber": "430 234",
+		"phoneNumbers": {
+			"tel": "033 853 67 16",
+			"fax": "033 853 67 19",
+			"email": "grossescheidegg@bluewin.ch"
+		}
+	}
+}

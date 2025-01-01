@@ -132,13 +132,12 @@ Preserve both the hierarchical relationships and semantic meaning of the origina
   - No Delimiters: Do not use code fences or delimiters like \`\`\`json.
   - Complete Schema: Create appropriate JSON objects and arrays to represent all document elements
   - Complete Content: Do not omit any part of the page, including headers, footers, and subtext.
-  - Structural Fidelity: 
-   Maintain parent-child relationships between elements
-   Preserve the sequential order of content
-   Represent visual hierarchy through nested objects
-  - Keep the text in the same order as the original document.
+  - Maintain parent-child relationships between elements
+  - Preserve the sequential order of content
+  - Represent visual hierarchy through nested objects
   - Keep the text as close to the original formatting as possible.
   - Do NOT include any text that is not visible on the image.
+  - Do NOT repeate keys 
   - Compare output structure to original document layout
   - Represent tables as arrays of objects with consistent column names
   - Verify all content is included without omissions
