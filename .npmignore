@@ -1,3 +1,5 @@
 README.md
 test/
 .env
+biome.json
+lefthook.yml
