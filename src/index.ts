@@ -27,16 +27,23 @@ export async function ocr({
 	apiKey = process.env.GROQ_API_KEY,
 	model = GroqVisionModel.LLAMA_32_11B,
 	jsonMode = false,
+	additionalInstructions = "",
 }: {
 	filePath: string;
 	apiKey?: string;
 	model?: GroqVisionModel;
 	jsonMode?: boolean;
+	additionalInstructions?: string;
 }) {
 	const client = new Groq({ apiKey });
 	const result = jsonMode
-		? await getJson({ groq: client, model, filePath })
-		: await getMarkdown({ groq: client, model, filePath });
+		? await getJson({ groq: client, model, filePath, additionalInstructions })
+		: await getMarkdown({
+				groq: client,
+				model,
+				filePath,
+				additionalInstructions,
+			});
 	return result;
 }
 
@@ -54,10 +61,12 @@ async function getMarkdown({
 	groq,
 	model,
 	filePath,
+	additionalInstructions,
 }: {
 	groq: Groq;
 	model: GroqVisionModel;
 	filePath: string;
+	additionalInstructions?: string;
 }) {
 	const systemPrompt = `Convert the provided image into Markdown format. 
   Ensure that all content from the page is included, such as headers, footers, subtexts, images (with alt text if possible), tables, and any other elements.
@@ -76,7 +85,7 @@ async function getMarkdown({
   - Confirm heading hierarchy matches visual importance
   - Validate table column alignment matches source
   `;
-
+	const prompt = `${systemPrompt}\n\n${additionalInstructions}`;
 	const imageUrl = await getImageUrl(filePath);
 
 	const completion = await groq.chat.completions.create({
@@ -86,7 +95,7 @@ async function getMarkdown({
 				content: [
 					{
 						type: "text",
-						text: systemPrompt,
+						text: additionalInstructions ? prompt : systemPrompt,
 					},
 					{
 						type: "image_url",
@@ -118,10 +127,12 @@ async function getJson({
 	groq,
 	model,
 	filePath,
+	additionalInstructions,
 }: {
 	groq: Groq;
 	model: GroqVisionModel;
 	filePath: string;
+	additionalInstructions?: string;
 }) {
 	const systemPrompt = `Convert the provided image into JSON format.
 Ensure that all content from the page is captured in an appropriate JSON structure, including headers, footers, subtexts, images (with alt text if possible), tables, and any other elements.
@@ -148,7 +159,7 @@ Preserve both the hierarchical relationships and semantic meaning of the origina
   - Ensure semantic relationships are preserved in the JSON schema
   - Confirm nested levels match visual importance in the source
   `;
-
+	const prompt = `${systemPrompt}\n\n${additionalInstructions}`;
 	const imageUrl = await getImageUrl(filePath);
 
 	const completion = await groq.chat.completions.create({
@@ -158,7 +169,7 @@ Preserve both the hierarchical relationships and semantic meaning of the origina
 				content: [
 					{
 						type: "text",
-						text: systemPrompt,
+						text: additionalInstructions ? prompt : systemPrompt,
 					},
 					{
 						type: "image_url",

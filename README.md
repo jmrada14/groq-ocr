@@ -56,6 +56,7 @@ const result = await ocr({
   apiKey: process.env.GROQ_API_KEY, // Get your API key from https://console.groq.com/
   model: GroqVisionModel.LLAMA_32_90B, // available models: LLAMA_32_11B, LLAMA_32_90B. Default: LLAMA_32_11B
   jsonMode: false, // Default: false. Set to true to get JSON output.
+  additionalInstructions: "Additional instructions to be included in the prompt.", // Use to give custom instructions to the model.
 });
 ```
 
@@ -70,6 +71,8 @@ const result = await ocr({
   - `GroqVisionModel.LLAMA_32_90B` - Llama 3.2 90B Vision Preview
 - **jsonMode** (optional): Return structured JSON instead of markdown
   - Defaults to `false`
+- **additionalInstructions** (optional): Additional instructions to be included in the prompt.
+  - Defaults to "" - use to give custom instructions to the model.
 
 ### Use as CLI:
 
@@ -137,8 +140,9 @@ enum GroqVisionModel {
 - [x] Add support for single page PDFs
 - [x] Add support for JSON output in addition to markdown
 - [x] Add CLI 
+- [x] extend prompt with custom instructions
 - [ ] Add support for multi-page PDFs OCR (COMING SOON)
-- [ ] extend prompt with custom instructions
+
 
 ## Credit
 
