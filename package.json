@@ -1,6 +1,6 @@
 {
 	"name": "groq-ocr",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "a library to run OCR with Groq provided models.",
 	"main": "dist/src/index.js",
 	"scripts": {
@@ -13,7 +13,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/node": "^22.10.2",
-
 		"lefthook": "^1.10.1",
 		"tsx": "^4.19.2",
 		"typescript": "^5.7.2"
