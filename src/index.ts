@@ -270,7 +270,9 @@ async function pdfToBase64(pdfPath: string) {
 		}
 		const pdfFile = fs.readFileSync(pdfPath);
 		const bufferPdf = await pdftobuffer(pdfFile, "all");
+		console.log({ bufferPdf });
 		const pdfBuffer = Buffer.concat(bufferPdf);
+		console.log({ pdfBuffer });
 		return pdfBuffer.toString("base64");
 	} catch (error) {
 		throw new Error(`Failed to encode image: ${(error as Error).message}`);

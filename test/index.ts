@@ -8,6 +8,7 @@ const remoteJpg =
 	"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/ReceiptSwiss.jpg/900px-ReceiptSwiss.jpg";
 const localJpg = path.join(__dirname, "../test/sample.jpg");
 const localPdf = path.join(__dirname, "../test/sample.pdf");
+const localMultipagePdf = path.join(__dirname, "../test/hayekpretence.pdf");
 
 async function markdownTests() {
 	// Test OCR on a local image file to markdown
@@ -34,6 +35,13 @@ async function markdownTests() {
 		model: GroqVisionModel.LLAMA_32_90B,
 	});
 	fs.writeFileSync(path.join(__dirname, "output_pdf_to_md.md"), markdown3);
+	// Test OCR on a local multipage PDF file to markdown
+	const markdown4 = await ocr({
+		filePath: localMultipagePdf,
+		apiKey: process.env.GROQ_API_KEY,
+		model: GroqVisionModel.LLAMA_32_90B,
+	});
+	fs.writeFileSync(path.join(__dirname, "output_multipdf_to_md.md"), markdown4);
 }
 
 async function jsonTests() {
