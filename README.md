@@ -3,6 +3,7 @@
     <h1 align="center">Groq OCR 🔬</h1>
   </div>
   <p>An npm library and CLI to run OCR with Groq provided models.</p>
+  <a href="https://www.npmjs.com/package/groq-ocr"><img src="https://img.shields.io/npm/v/groq-ocr" alt="Current version"></a>
 <a href="https://groq.com" target="_blank" rel="noopener noreferrer">
   <img
     src="https://groq.com/wp-content/uploads/2024/03/PBG-mark1-color.svg"
