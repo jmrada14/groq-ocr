@@ -33,7 +33,7 @@
 
 _This project is still in development‼️_
 
-_PDF support is limited to single-page local PDFs._
+_Multi-page PDF support is experimental and work in progress._
 
 _PDF support relies on [pdftopic](https://github.com/Ilyes-El-Majouti/pdftopic) library which requires node>=12 and imagemagick._
 
@@ -141,7 +141,7 @@ enum GroqVisionModel {
 - [x] Add support for JSON output in addition to markdown
 - [x] Add CLI 
 - [x] extend prompt with custom instructions
-- [ ] Add support for multi-page PDFs OCR (COMING SOON)
+- [ ] Add support for multi-page PDFs OCR (Available but experimental)
 
 
 ## Credit
