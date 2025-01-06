@@ -269,8 +269,9 @@ async function pdfToBase64(pdfPath: string) {
 			throw new Error(`Pdf file not found: ${pdfPath}`);
 		}
 		const pdfFile = fs.readFileSync(pdfPath);
-		const bufferPdf = await pdftobuffer(pdfFile, 0);
-		return Buffer.from(bufferPdf[0]).toString("base64");
+		const bufferPdf = await pdftobuffer(pdfFile, "all");
+		const pdfBuffer = Buffer.concat(bufferPdf);
+		return pdfBuffer.toString("base64");
 	} catch (error) {
 		throw new Error(`Failed to encode image: ${(error as Error).message}`);
 	}
